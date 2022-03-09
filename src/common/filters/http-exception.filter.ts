@@ -21,16 +21,18 @@ export class AllExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const message =
+    const error =
       exception instanceof HttpException ? exception.getResponse() : exception;
 
     if (status === HttpStatus.INTERNAL_SERVER_ERROR)
-      this.logger.error(`Status: ${status} Error: ${JSON.stringify(message)}`);
+      this.logger.error(`Status: ${status} Error: ${JSON.stringify(error)}`);
+
+    if (error?.stack) delete error.stack;
 
     response.status(status).json({
       time: new Date().toISOString(),
       path: request.url,
-      error: message,
+      error: error,
     });
   }
 }
