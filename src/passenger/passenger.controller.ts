@@ -7,8 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { IDeleteResponse } from '../interfaces/delete-response.interface';
-import { IPassenger } from '../interfaces/passenger.interface';
+import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
+import { IPassenger } from '../common/interfaces/passenger.interface';
 import { PassengerDTO } from './dto/passenger.dto';
 import { PassengerService } from './passenger.service';
 

@@ -6,13 +6,13 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { IUser } from '../interfaces/user.interface';
+import { IUser } from '../common/interfaces/user.interface';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { USER } from '../common/models/models';
-import { IDeleteResponse } from '../interfaces/delete-response.interface';
+import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
 
 @Injectable()
 export class UserService {

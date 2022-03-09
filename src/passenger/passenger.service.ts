@@ -6,12 +6,12 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { IPassenger } from '../interfaces/passenger.interface';
+import { IPassenger } from '../common/interfaces/passenger.interface';
 import { PassengerDTO } from './dto/passenger.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PASSENGER } from '../common/models/models';
-import { IDeleteResponse } from '../interfaces/delete-response.interface';
+import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
 
 @Injectable()
 export class PassengerService {
