@@ -12,12 +12,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FLIGHT } from '../common/models/models';
 import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
-
+import { ILocation } from '../common/interfaces/location.interface';
+import axios from 'axios';
+import { IWeather } from '../common/interfaces/weather.interface';
+import { format } from 'date-fns';
 @Injectable()
 export class FlightService {
   private readonly logger: Logger = new Logger(FlightService.name, {
     timestamp: true,
   });
+
+  private readonly API_WEATHER: string = 'https://www.metaweather.com/api';
 
   constructor(
     @InjectModel(FLIGHT.name) private readonly model: Model<IFlight>,
@@ -48,7 +53,16 @@ export class FlightService {
       throw new NotFoundException(`Flight with ID: ${id} was not found`);
     }
 
-    return flight;
+    const location: ILocation | Record<string, never> = await this.getLocation(
+      flight.destinationCity,
+    );
+
+    const weather: IWeather[] = await this.getWeather(
+      location?.woeid,
+      flight.flightDate,
+    );
+
+    return this.assing(flight, weather);
   }
 
   async update(id: string, flightDTO: FlightDTO): Promise<IFlight> {
@@ -96,5 +110,50 @@ export class FlightService {
         `Error adding passenger: ${passengerId} to flight: ${flightId}`,
       );
     }
+  }
+
+  assing(flight: IFlight, weather: IWeather[]): IFlight {
+    const { _id, pilot, airplane, destinationCity, flightDate, passengers } =
+      flight;
+
+    return Object.assign({
+      _id,
+      pilot,
+      airplane,
+      destinationCity,
+      flightDate,
+      passengers,
+      weather,
+    });
+  }
+
+  async getLocation(
+    destinationCity: string,
+  ): Promise<ILocation | Record<string, never>> {
+    const { data } = await axios.get(
+      `${this.API_WEATHER}/location/search?query=${destinationCity}`,
+    );
+
+    if (data.length) return data[0];
+
+    return {};
+  }
+
+  async getWeather(
+    woeid: number | undefined,
+    flightDate: Date,
+  ): Promise<IWeather[]> {
+    if (!woeid) return [];
+
+    const date = format(flightDate, 'yyyy/mm/dd');
+    const year = date.split('/')[0];
+    const month = String(parseInt(date.split('/')[1]) + 1);
+    const day = String(parseInt(date.split('/')[2]) + 1);
+
+    const { data } = await axios.get(
+      `${this.API_WEATHER}/location/${woeid}/${year}/${month}/${day}`,
+    );
+
+    return data;
   }
 }
