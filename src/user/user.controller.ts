@@ -7,8 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { IDeleteResponse } from '../interfaces/delete-response.interface';
-import { IUser } from '../interfaces/user.interface';
+import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
+import { IUser } from '../common/interfaces/user.interface';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
