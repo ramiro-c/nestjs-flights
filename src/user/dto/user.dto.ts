@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -8,14 +9,17 @@ import {
 } from 'class-validator';
 
 export class UserDTO {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly name: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly username: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   readonly email: string;
@@ -24,6 +28,10 @@ export class UserDTO {
   // Passwords will contain at least 1 lower case letter
   // Passwords will contain at least 1 number or special character
   // There is no length validation (min, max) in the regex
+  @ApiProperty({
+    minLength: 8,
+    maxLength: 32,
+  })
   @IsString()
   @MinLength(8)
   @MaxLength(32)
