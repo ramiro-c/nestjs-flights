@@ -7,7 +7,9 @@ export class PassengerDTO {
   @IsString()
   readonly name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: "passenger@email.com"
+  })
   @IsNotEmpty()
   @IsEmail()
   readonly email: string;

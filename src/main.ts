@@ -8,7 +8,7 @@ import {
   swaggerConfig,
   swaggerOptions,
   swaggerCustomOptions,
-} from './config/swagger.config';
+} from './common/config/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

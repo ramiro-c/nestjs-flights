@@ -1,30 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
-export class UserDTO {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly name: string;
+export class AuthDTO {
+  _id?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly username: string;
-
-  @ApiProperty({
-    default: "user@email.com"
-  })
-  @IsNotEmpty()
-  @IsEmail()
-  readonly email: string;
+  username: string;
 
   // Passwords will contain at least 1 upper case letter
   // Passwords will contain at least 1 lower case letter

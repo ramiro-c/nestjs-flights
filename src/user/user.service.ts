@@ -22,6 +22,20 @@ export class UserService {
 
   constructor(@InjectModel(USER.name) private readonly model: Model<IUser>) {}
 
+  async findByUsername(username: string): Promise<IUser> {
+    const user = await this.model.findOne({ username });
+
+    if (!user) {
+      throw new NotFoundException(`User: ${username} was not found`);
+    }
+
+    return user;
+  }
+
+  async checkPassword(password: string, passwordDB: string): Promise<boolean> {
+    return await bcrypt.compare(password, passwordDB);
+  }
+
   async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);
   }

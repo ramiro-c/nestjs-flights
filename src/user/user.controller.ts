@@ -6,14 +6,24 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
 import { IUser } from '../common/interfaces/user.interface';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('api/v1/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

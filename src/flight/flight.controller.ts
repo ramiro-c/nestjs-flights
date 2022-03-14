@@ -6,8 +6,16 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { IDeleteResponse } from '../common/interfaces/delete-response.interface';
 import { IFlight } from '../common/interfaces/flight.interface';
 import { PassengerService } from '../passenger/passenger.service';
@@ -15,6 +23,8 @@ import { FlightDTO } from './dto/flight.dto';
 import { FlightService } from './flight.service';
 
 @ApiTags('Flights')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('api/v1/flight')
 export class FlightController {
   constructor(

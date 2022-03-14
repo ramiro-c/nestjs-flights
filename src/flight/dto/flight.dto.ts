@@ -14,7 +14,7 @@ export class FlightDTO {
   readonly airplane: string;
 
   @ApiProperty({
-    description: 'La ciudad de destino (debe estar en ingles)'
+    description: 'La ciudad de destino (debe estar en ingles)',
   })
   @IsNotEmpty()
   @IsString()
