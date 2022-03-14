@@ -20,7 +20,7 @@ export class UserDTO {
   readonly username: string;
 
   @ApiProperty({
-    default: "user@email.com"
+    default: 'user@email.com',
   })
   @IsNotEmpty()
   @IsEmail()
@@ -33,7 +33,7 @@ export class UserDTO {
   @ApiProperty({
     minLength: 8,
     maxLength: 32,
-    default: "StrongPassword1234"
+    default: 'StrongPassword1234',
   })
   @IsString()
   @MinLength(8)

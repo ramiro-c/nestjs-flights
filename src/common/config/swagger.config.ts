@@ -14,13 +14,15 @@ const swaggerConfig = new DocumentBuilder()
 const swaggerOptions: SwaggerDocumentOptions = {
   operationIdFactory: (controllerKey: string, methodKey: string): string =>
     `${methodKey}_${controllerKey.slice(0, -10).toLowerCase()}`,
-    
 };
 
 const swaggerCustomOptions: ExpressSwaggerCustomOptions = {
   customSiteTitle: 'Flights API Docs',
-  swaggerOptions: { filter: true,   tagsSorter: 'alpha',
-  operationsSorter: 'alpha', },
+  swaggerOptions: {
+    filter: true,
+    tagsSorter: 'alpha',
+    operationsSorter: 'alpha',
+  },
 };
 
 export { swaggerConfig, swaggerOptions, swaggerCustomOptions };

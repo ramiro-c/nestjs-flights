@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class AuthDTO {
   _id?: string;
@@ -16,7 +22,7 @@ export class AuthDTO {
   @ApiProperty({
     minLength: 8,
     maxLength: 32,
-    default: "StrongPassword1234"
+    default: 'StrongPassword1234',
   })
   @IsString()
   @MinLength(8)
